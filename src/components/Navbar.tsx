@@ -1,13 +1,19 @@
 "use client";
 import Link from "next/link";
-import { FileText, Crown, Upload, User, Menu, X } from "lucide-react";
+import { FileText, Crown, Upload, Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { useState } from "react";
-import { is } from "zod/locales";
+
+import {
+  SignInButton,
+  SignUpButton,
+  SignedIn,
+  SignedOut,
+  UserButton,
+} from "@clerk/nextjs";
 
 export default function Navbar() {
-  const isloggedin = false;
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   const toggleMobileMenu = () => {
@@ -42,7 +48,8 @@ export default function Navbar() {
             Pricing
             <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary transition-all duration-300 group-hover:w-full" />
           </Link>
-          {isloggedin && (
+
+          <SignedIn>
             <Link
               href="/dashboard"
               className="text-sm font-medium text-muted-foreground transition-all duration-200 hover:text-primary hover:scale-105 relative group"
@@ -50,12 +57,12 @@ export default function Navbar() {
               Your Summaries
               <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary transition-all duration-300 group-hover:w-full" />
             </Link>
-          )}
+          </SignedIn>
         </div>
 
         {/* Desktop Right Section */}
         <div className="hidden md:flex items-center space-x-2 lg:space-x-4">
-          {isloggedin ? (
+          <SignedIn>
             <div className="flex items-center space-x-2 lg:space-x-3">
               <Button
                 asChild
@@ -89,27 +96,20 @@ export default function Navbar() {
                 <span className="hidden sm:inline">Pro</span>
               </Badge>
 
-              <Button
-                variant="outline"
-                size="sm"
-                className="flex items-center space-x-2 transition-all duration-200 hover:bg-primary hover:text-primary-foreground hover:scale-105 shadow-sm"
-              >
-                <User className="h-4 w-4" />
-                <span className="hidden sm:inline">User</span>
-              </Button>
+              <UserButton />
             </div>
-          ) : (
-            <Button
-              asChild
-              size="sm"
-              className="bg-gradient-to-r from-primary to-primary/80 hover:from-primary/90 hover:to-primary/70 transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-xl"
-            >
-              <Link href="/sign-in">
+          </SignedIn>
+          <SignedOut>
+            <SignInButton>
+              <Button
+                size="sm"
+                className="bg-gradient-to-r from-primary to-primary/80 hover:from-primary/90 hover:to-primary/70 transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-xl"
+              >
                 <span className="hidden sm:inline">Sign In</span>
                 <span className="sm:hidden">Sign In</span>
-              </Link>
-            </Button>
-          )}
+              </Button>
+            </SignInButton>
+          </SignedOut>
         </div>
 
         {/* Mobile Menu Button */}
@@ -143,7 +143,7 @@ export default function Navbar() {
               >
                 Pricing
               </Link>
-              {isloggedin && (
+              <SignedIn>
                 <Link
                   href="/dashboard"
                   className="block text-sm font-medium text-muted-foreground transition-all duration-200 hover:text-primary py-2"
@@ -151,12 +151,13 @@ export default function Navbar() {
                 >
                   Your Summaries
                 </Link>
-              )}
+              </SignedIn>
             </div>
 
             {/* Mobile Actions */}
             <div className="pt-4 border-t border-border/40 space-y-3">
-              {isloggedin ? (
+              +{" "}
+              <SignedIn>
                 <div className="space-y-3">
                   <Button
                     asChild
@@ -181,24 +182,17 @@ export default function Navbar() {
                       Pro
                     </Badge>
 
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      className="flex items-center space-x-2 transition-all duration-200 hover:bg-primary hover:text-primary-foreground shadow-sm"
-                    >
-                      <User className="h-4 w-4" />
-                      <span>User</span>
-                    </Button>
+                    <UserButton />
                   </div>
                 </div>
-              ) : (
-                <Button
-                  asChild
-                  className="w-full bg-gradient-to-r from-primary to-primary/80 hover:from-primary/90 hover:to-primary/70 transition-all duration-300 shadow-lg hover:shadow-xl"
-                >
-                  <Link href="/sign-in">Sign In</Link>
-                </Button>
-              )}
+              </SignedIn>
+              <SignedOut>
+                <SignInButton>
+                  <Button className="w-full bg-gradient-to-r from-primary to-primary/80 hover:from-primary/90 hover:to-primary/70 transition-all duration-300 shadow-lg">
+                    Sign In
+                  </Button>
+                </SignInButton>
+              </SignedOut>
             </div>
           </div>
         </div>
