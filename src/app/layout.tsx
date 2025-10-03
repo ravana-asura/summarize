@@ -9,7 +9,7 @@ const dmsans = DM_Sans({
   subsets: ["latin"],
 });
 export const metadata: Metadata = {
-  title: "Summarize",
+  title: "Summarizer",
   description: "Summarize your pdf with the power of AI",
 };
 
