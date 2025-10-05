@@ -93,7 +93,7 @@ export default function Navbar() {
                 className="bg-gradient-to-r from-amber-500/20 to-yellow-500/20 text-amber-700 dark:text-amber-300 border-amber-500/30 hover:scale-105 transition-all duration-200"
               >
                 <Crown className="h-3 w-3 mr-1" />
-                <span className="hidden sm:inline">Pro</span>
+                <span className="hidden sm:inline">Buy a Plan</span>
               </Badge>
 
               <UserButton />
@@ -179,7 +179,7 @@ export default function Navbar() {
                       className="bg-gradient-to-r from-amber-500/20 to-yellow-500/20 text-amber-700 dark:text-amber-300 border-amber-500/30"
                     >
                       <Crown className="h-3 w-3 mr-1" />
-                      Pro
+                      Buy a Plan
                     </Badge>
 
                     <UserButton />
