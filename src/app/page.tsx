@@ -22,7 +22,7 @@ import {
   CardDescription,
   CardContent,
 } from "@/components/ui/card";
-import { id } from "zod/locales";
+
 
 export default function Home() {
   return (

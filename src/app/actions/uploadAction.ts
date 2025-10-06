@@ -3,6 +3,7 @@
 import { fetchAndExtractPdftext } from "@/lib/langchain";
 import { generateSummaryfromOpenAi } from "@/lib/openai";
 import { generateSummaryfromGemini } from "@/lib/gemini";
+import prisma from "@/lib/prisma";
 type UploadResponse = {
   serverData: {
     userId: string;
@@ -59,6 +60,26 @@ export default async function generatePdfSummary({
           geminiError,
         });
         throw new Error("Failed to generate summary with both AI services");
+      }
+    }
+
+    // Save to database only once after successful summary generation
+    if (summary) {
+      try {
+        const savedSummary = await prisma.pdf_summary.create({
+          data: {
+            userId,
+            fileName,
+            originFileUrl: pdfUrl,
+            summaryText: summary,
+            status: "completed",
+            title: `Summary of ${fileName}`,
+          },
+        });
+        console.log("✅ PDF summary saved to database:", savedSummary.id);
+      } catch (dbError) {
+        console.error("❌ Failed to save summary to database:", dbError);
+        // Continue anyway, as we have the summary
       }
     }
 
