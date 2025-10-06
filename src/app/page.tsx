@@ -14,6 +14,7 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 
+
 import {
   Card,
   CardHeader,
@@ -52,6 +53,8 @@ function HeroSection() {
             </p>
           </Badge>
         </div>
+     
+   
 
         <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold leading-tight mb-3">
           <span className="text-foreground">
@@ -388,7 +391,7 @@ function CTASection() {
               our AI-powered summarizer.
             </p>
           </div>
-
+     
           <div className="space-y-6">
             <Button
               asChild
